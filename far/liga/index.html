@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA Fantasy Liga</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background-color: #121212; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        
+        .podium { display: flex; justify-content: space-around; align-items: flex-end; margin-bottom: 30px; padding-top: 20px; }
+        .podium-place { text-align: center; }
+        .medal { font-size: 2.5em; display: block; }
+        .gold { color: #FFD700; }
+        .silver { color: #C0C0C0; }
+        .bronze { color: #CD7F32; }
+
+        table { width: 100%; border-collapse: collapse; background: #1e1e1e; border-radius: 12px; overflow: hidden; margin-bottom: 30px; }
+        th { color: #888; font-size: 0.8em; padding: 15px; text-align: center; }
+        td { padding: 15px; border-bottom: 1px solid #333; text-align: center; }
+        .name { text-align: left; font-weight: bold; }
+        .highlight { background-color: #2a2a00; border-left: 4px solid #f8e71c; }
+        
+        h2 { font-size: 1.2em; color: #f8e71c; margin-bottom: 10px; }
+        .team-row { background-color: #1a2a3a; }
+        
+        .btn-link { display: block; width: 100%; padding: 15px; text-align: center; background-color: #3b82f6; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="podium">
+        <div class="podium-place">
+            <span class="medal silver">🥈</span>
+            <div>Claeshs</div>
+        </div>
+        <div class="podium-place">
+            <span class="medal gold">🥇</span>
+            <div style="font-weight:bold;">IsaacLHH</div>
+        </div>
+        <div class="podium-place">
+            <span class="medal bronze">🥉</span>
+            <div>HoltzmannLeader</div>
+        </div>
+    </div>
+
+    <h2>Individuel Stilling</h2>
+    <table>
+        <thead><tr><th>Nr.</th><th style="text-align: left;">Navn</th><th>RD</th><th>Total</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td class="name">IsaacLHH</td><td>41</td><td>291</td></tr>
+            <tr class="highlight"><td>2</td><td class="name">Claeshs</td><td>27</td><td>252</td></tr>
+            <tr><td>3</td><td class="name">HoltzmannLeader</td><td>22</td><td>232</td></tr>
+            <tr><td>4</td><td class="name">My ego...</td><td>4</td><td>186</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Hold-dysten</h2>
+    <table>
+        <thead><tr><th style="text-align: left;">Hold</th><th>Total Point</th></tr></thead>
+        <tbody>
+            <tr class="team-row">
+                <td class="name">👨 Team Far</td>
+                <td>543</td>
+            </tr>
+            <tr>
+                <td class="name">👩 Team Mor</td>
+                <td>418</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="https://play.fifa.com/fantasy/leagues/340211/table" target="_blank" class="btn-link">Gå til officiel FIFA Liga</a>
+</div>
+
+</body>
+</html>
