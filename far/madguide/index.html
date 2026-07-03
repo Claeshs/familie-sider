@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#cf4632">
+<title>Familiens Madguide · Toscana 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
+</head>
+<body>
+<style>
+  :root{
+    --paper:#eef0e4;
+    --card:#fbfaf3;
+    --ink:#26201b;
+    --ink-soft:#6f6a5b;
+    --pomodoro:#cf4632;
+    --basil:#2f6b4a;
+    --gold:#cf9a3c;
+    --line:#d8d3c1;
+    --line-dot:#c3bea9;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --disp:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .page{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    min-height:100vh;
+    padding:0 0 4rem;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 1.1rem}
+
+  /* header — receipt top */
+  header.masthead{
+    background:var(--card);
+    border-bottom:2px solid var(--ink);
+    position:relative;
+    padding:1.6rem 0 1.3rem;
+    margin-bottom:1.4rem;
+  }
+  header.masthead::before{
+    content:"";position:absolute;left:0;right:0;top:-9px;height:9px;
+    background:radial-gradient(circle at 6px 9px, transparent 6px, var(--card) 6.5px);
+    background-size:14px 14px;background-repeat:repeat-x;
+  }
+  .kick{
+    font-family:var(--disp);font-size:.72rem;font-weight:800;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--pomodoro);margin:0 0 .35rem;
+  }
+  h1{
+    font-family:var(--disp);font-weight:800;letter-spacing:-.01em;text-wrap:balance;
+    font-size:clamp(1.7rem,7vw,2.4rem);line-height:1.02;margin:0;text-transform:uppercase;
+  }
+  .sub{font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);margin:.6rem 0 0;letter-spacing:.02em}
+
+  h2.section{
+    font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:.14em;
+    font-size:.82rem;color:var(--basil);margin:0 0 .8rem;
+    display:flex;align-items:center;gap:.6rem;
+  }
+  h2.section::after{content:"";flex:1;height:2px;background:var(--line)}
+
+  /* standings */
+  .standings{
+    background:var(--card);border:2px solid var(--ink);border-radius:2px;
+    padding:1rem 1.1rem 1.15rem;margin-bottom:1.9rem;
+  }
+  .stand-row{
+    display:flex;align-items:baseline;gap:.5rem;padding:.42rem 0;
+    border-bottom:1px dotted var(--line-dot);
+  }
+  .stand-row:last-child{border-bottom:0}
+  .rank{
+    font-family:var(--mono);font-weight:700;font-size:.9rem;width:1.9rem;flex:none;
+    color:var(--ink-soft);text-align:center;
+  }
+  .rank.top1{color:var(--gold)} .rank.top2{color:#9a9384} .rank.top3{color:#b07a4a}
+  .stand-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .leader{flex:1;border-bottom:1px dotted var(--line-dot);transform:translateY(-.28em);min-width:1rem}
+  .stand-score{font-family:var(--mono);font-weight:700;font-size:1.05rem;font-variant-numeric:tabular-nums}
+  .stand-meta{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);flex:none}
+  .empty{color:var(--ink-soft);font-style:italic;padding:.4rem 0}
+
+  /* restaurant cards */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--basil);
+    border-radius:2px;padding:1rem 1.1rem 1.15rem;margin-bottom:1.1rem;
+  }
+  .card.rated-top{border-left-color:var(--pomodoro)}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.2rem}
+  .card-date{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);letter-spacing:.03em}
+  .card-name{font-family:var(--disp);font-weight:800;font-size:1.18rem;line-height:1.1;margin:.15rem 0 .1rem;text-wrap:balance}
+  .chosen{
+    display:inline-block;font-size:.68rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;
+    color:var(--basil);border:1px solid var(--basil);border-radius:999px;padding:.12rem .5rem;margin-top:.15rem;
+  }
+  .card-avg{text-align:right;flex:none}
+  .avg-num{font-family:var(--mono);font-weight:700;font-size:1.85rem;line-height:1;font-variant-numeric:tabular-nums}
+  .avg-num.none{color:var(--line-dot);font-weight:600}
+  .avg-lbl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);display:block;margin-top:.2rem}
+
+  .scorers{margin-top:.9rem;border-top:1px dotted var(--line-dot);padding-top:.7rem;display:flex;flex-direction:column;gap:.15rem}
+  .scorer{display:grid;grid-template-columns:4.4rem 1fr 2.4rem;align-items:center;gap:.55rem;padding:.28rem 0}
+  .scorer-name{font-weight:600;font-size:.9rem}
+  .scorer-val{font-family:var(--mono);font-weight:700;font-size:1rem;text-align:right;font-variant-numeric:tabular-nums}
+  .scorer-val.unrated{color:var(--line-dot)}
+
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer;margin:0;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--line)}
+  input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line)}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--pomodoro);border:2px solid var(--card);margin-top:-7px;box-shadow:0 1px 2px rgba(0,0,0,.25);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;background:var(--pomodoro);border:2px solid var(--card);box-shadow:0 1px 2px rgba(0,0,0,.25);
+  }
+  input[type=range].unrated::-webkit-slider-thumb{background:var(--line-dot)}
+  input[type=range].unrated::-moz-range-thumb{background:var(--line-dot)}
+  input[type=range]:focus-visible{outline:2px solid var(--basil);outline-offset:3px;border-radius:4px}
+
+  .clearbtn{
+    background:none;border:0;color:var(--ink-soft);font-size:1.1rem;line-height:1;cursor:pointer;padding:.1rem .2rem;
+    grid-column:3;justify-self:end;
+  }
+  .card-del{background:none;border:0;color:var(--ink-soft);font-family:var(--mono);font-size:.7rem;cursor:pointer;padding:.2rem;margin-top:.6rem;text-decoration:underline}
+  .card-del:hover{color:var(--pomodoro)}
+
+  /* add form + tools */
+  .panel{background:var(--card);border:2px dashed var(--line);border-radius:2px;padding:1rem 1.1rem;margin-top:1.9rem}
+  .panel h2.section{color:var(--pomodoro)}
+  .field{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.7rem}
+  .field label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+  .field input,.field select{
+    font-family:var(--sans);font-size:1rem;padding:.55rem .6rem;border:1px solid var(--line);border-radius:2px;
+    background:#fff;color:var(--ink);width:100%;
+  }
+  .field input:focus,.field select:focus{outline:2px solid var(--basil);outline-offset:1px;border-color:var(--basil)}
+  .btn{
+    font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;
+    background:var(--pomodoro);color:#fff;border:0;border-radius:2px;padding:.7rem 1rem;cursor:pointer;width:100%;
+  }
+  .btn:hover{filter:brightness(1.06)}
+  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+  .tools{display:flex;gap:.6rem;margin-top:1rem}
+  .tools .btn{width:auto;flex:1;font-size:.72rem;padding:.6rem .5rem}
+  footer{text-align:center;font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:2rem;line-height:1.7}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="wrap">
+      <p class="kick">Holtzmann &middot; Toscana 2026</p>
+      <h1>Familiens Madguide</h1>
+      <p class="sub" id="tagline">Fem dommere &middot; 0&ndash;10 med én decimal</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section>
+      <h2 class="section">Stillingen</h2>
+      <div class="standings" id="standings"></div>
+    </section>
+
+    <section>
+      <h2 class="section">Stederne</h2>
+      <div id="cards"></div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section">Tilføj et sted</h2>
+      <div class="field">
+        <label for="f-name">Restaurant</label>
+        <input id="f-name" type="text" placeholder="fx Osteria del Sole" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="f-date">Dato</label>
+        <input id="f-date" type="date">
+      </div>
+      <div class="field">
+        <label for="f-chosen">Valgt af</label>
+        <select id="f-chosen"></select>
+      </div>
+      <button class="btn" id="add-btn">Føj til listen</button>
+      <div class="tools">
+        <button class="btn ghost" id="export-btn">Eksportér</button>
+        <button class="btn ghost" id="import-btn">Importér</button>
+      </div>
+      <input id="import-file" type="file" accept="application/json,.json" hidden>
+    </section>
+
+    <footer>
+      Gemmes automatisk på denne enhed.<br>Brug Eksportér for at gemme en kopi eller flytte data.
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var PEOPLE = ["Claes","Dorthe","Oliver","Isaac","Lucas"];
+  var KEY = "holtzmann-toscana-anmeldelser-v1";
+  var MONTHS = ["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"];
+
+  var SEED = [
+    {id:"s1", date:"2026-06-22", name:"Pizzeria Garibaldi",   chosenBy:"Dorthe", scores:{}},
+    {id:"s2", date:"2026-06-23", name:"Bottega del Burchio",  chosenBy:"Oliver", scores:{}},
+    {id:"s3", date:"2026-06-25", name:"American 1950's Diner", chosenBy:"Isaac",  scores:{}},
+    {id:"s4", date:"2026-06-27", name:"American 1950's Diner", chosenBy:"Lucas",  scores:{}},
+    {id:"s5", date:"2026-06-30", name:"Ristorante Stroncapane",chosenBy:"Claes",  scores:{}},
+    {id:"s6", date:"2026-07-01", name:"McDonald's",            chosenBy:"Dorthe", scores:{}}
+  ];
+
+  var data;
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ data = JSON.parse(raw); if(Array.isArray(data)) return; }
+    }catch(e){}
+    data = JSON.parse(JSON.stringify(SEED));
+    save();
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){} }
+
+  function fmtDate(iso){
+    var p = (iso||"").split("-");
+    if(p.length!==3) return iso||"";
+    var d = parseInt(p[2],10), m = parseInt(p[1],10)-1;
+    if(isNaN(d)||m<0||m>11) return iso;
+    return d + ". " + MONTHS[m];
+  }
+  function avgOf(r){
+    var vals = PEOPLE.map(function(p){return r.scores[p];}).filter(function(v){return typeof v==="number";});
+    if(!vals.length) return null;
+    var s=0; vals.forEach(function(v){s+=v;});
+    return {avg: s/vals.length, n: vals.length};
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  function renderStandings(){
+    var box = document.getElementById("standings");
+    var ranked = data.map(function(r){ return {r:r, a:avgOf(r)}; })
+                     .filter(function(x){ return x.a; })
+                     .sort(function(a,b){ return b.a.avg - a.a.avg; });
+    if(!ranked.length){
+      box.innerHTML = '<div class="empty">Ingen karakterer endnu &mdash; giv den første nedenfor.</div>';
+      return;
+    }
+    box.innerHTML = ranked.map(function(x,i){
+      var pos = i+1;
+      var cls = pos===1?"top1":pos===2?"top2":pos===3?"top3":"";
+      var badge = pos===1?"&#127942;":pos+".";
+      return '<div class="stand-row">'
+        + '<span class="rank '+cls+'">'+badge+'</span>'
+        + '<span class="stand-name">'+esc(x.r.name)+'</span>'
+        + '<span class="leader"></span>'
+        + '<span class="stand-score">'+x.a.avg.toFixed(1)+'</span>'
+        + '<span class="stand-meta">'+x.a.n+'/'+PEOPLE.length+'</span>'
+        + '</div>';
+    }).join("");
+  }
+
+  function renderCards(){
+    var top = null, ranked = data.map(function(r){return {id:r.id,a:avgOf(r)};}).filter(function(x){return x.a;}).sort(function(a,b){return b.a.avg-a.a.avg;});
+    if(ranked.length) top = ranked[0].id;
+
+    var wrap = document.getElementById("cards");
+    var sorted = data.slice().sort(function(a,b){ return (a.date||"").localeCompare(b.date||""); });
+    wrap.innerHTML = sorted.map(function(r){
+      var a = avgOf(r);
+      var avgHtml = a ? '<span class="avg-num">'+a.avg.toFixed(1)+'</span>'
+                      : '<span class="avg-num none">&ndash;</span>';
+      var scorers = PEOPLE.map(function(p){
+        var v = r.scores[p];
+        var rated = typeof v==="number";
+        var slVal = rated ? v : 5;
+        return '<div class="scorer">'
+          + '<span class="scorer-name">'+p+'</span>'
+          + '<input type="range" min="0" max="10" step="0.1" value="'+slVal+'" '
+            + 'class="'+(rated?"":"unrated")+'" data-id="'+r.id+'" data-person="'+p+'" '
+            + 'aria-label="'+p+'s karakter til '+esc(r.name)+'">'
+          + (rated
+              ? '<span class="scorer-val">'+v.toFixed(1)+'</span>'
+              : '<span class="scorer-val unrated">&ndash;</span>')
+          + (rated ? '<button class="clearbtn" data-clear="'+r.id+'" data-person="'+p+'" title="Fjern '+p+'s karakter" aria-label="Fjern '+p+'s karakter">&times;</button>' : '')
+          + '</div>';
+      }).join("");
+
+      return '<article class="card'+(r.id===top?' rated-top':'')+'">'
+        + '<div class="card-head">'
+          + '<div>'
+            + '<div class="card-date">'+fmtDate(r.date)+'</div>'
+            + '<h3 class="card-name">'+esc(r.name)+'</h3>'
+            + '<span class="chosen">Valgt af '+esc(r.chosenBy)+'</span>'
+          + '</div>'
+          + '<div class="card-avg">'+avgHtml+'<span class="avg-lbl">gennemsnit</span></div>'
+        + '</div>'
+        + '<div class="scorers">'+scorers+'</div>'
+        + '<button class="card-del" data-del="'+r.id+'">slet stedet</button>'
+        + '</article>';
+    }).join("");
+
+    // wire sliders
+    wrap.querySelectorAll('input[type=range]').forEach(function(sl){
+      sl.addEventListener('input', function(){
+        var r = find(sl.getAttribute('data-id'));
+        if(!r) return;
+        var p = sl.getAttribute('data-person');
+        r.scores[p] = Math.round(parseFloat(sl.value)*10)/10;
+        save();
+        // light in-place update without full re-render for smoothness
+        var val = sl.parentNode.querySelector('.scorer-val');
+        val.textContent = r.scores[p].toFixed(1);
+        val.classList.remove('unrated');
+        sl.classList.remove('unrated');
+      });
+      sl.addEventListener('change', renderAll); // finalize -> refresh averages/standings + clear button
+    });
+    wrap.querySelectorAll('.clearbtn').forEach(function(b){
+      b.addEventListener('click', function(){
+        var r = find(b.getAttribute('data-clear')); if(!r) return;
+        delete r.scores[b.getAttribute('data-person')];
+        save(); renderAll();
+      });
+    });
+    wrap.querySelectorAll('.card-del').forEach(function(b){
+      b.addEventListener('click', function(){
+        var r = find(b.getAttribute('data-del')); if(!r) return;
+        if(confirm('Slet "'+r.name+'"? Alle karakterer for stedet forsvinder.')){
+          data = data.filter(function(x){return x.id!==r.id;});
+          save(); renderAll();
+        }
+      });
+    });
+  }
+
+  function find(id){ for(var i=0;i<data.length;i++){ if(data[i].id===id) return data[i]; } return null; }
+
+  function renderAll(){ renderStandings(); renderCards(); }
+
+  // add form
+  function initForm(){
+    var sel = document.getElementById('f-chosen');
+    sel.innerHTML = PEOPLE.map(function(p){return '<option>'+p+'</option>';}).join("") + '<option>Andre</option>';
+    document.getElementById('add-btn').addEventListener('click', function(){
+      var name = document.getElementById('f-name').value.trim();
+      var date = document.getElementById('f-date').value;
+      var chosen = sel.value;
+      if(!name){ alert('Skriv restaurantens navn.'); return; }
+      if(!date){ alert('Vælg en dato.'); return; }
+      data.push({id:'r'+Date.now(), date:date, name:name, chosenBy:chosen, scores:{}});
+      save(); renderAll();
+      document.getElementById('f-name').value=''; document.getElementById('f-date').value='';
+      document.getElementById('f-name').focus();
+    });
+  }
+
+  function initTools(){
+    document.getElementById('export-btn').addEventListener('click', function(){
+      var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'toscana-anmeldelser.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url);}, 500);
+    });
+    var fileInput = document.getElementById('import-file');
+    document.getElementById('import-btn').addEventListener('click', function(){ fileInput.click(); });
+    fileInput.addEventListener('change', function(){
+      var f = fileInput.files[0]; if(!f) return;
+      var rd = new FileReader();
+      rd.onload = function(){
+        try{
+          var parsed = JSON.parse(rd.result);
+          if(!Array.isArray(parsed)) throw new Error('format');
+          data = parsed; save(); renderAll();
+          alert('Indlæst '+data.length+' steder.');
+        }catch(e){ alert('Kunne ikke læse filen — er det en eksporteret JSON?'); }
+        fileInput.value='';
+      };
+      rd.readAsText(f);
+    });
+  }
+
+  load();
+  initForm();
+  initTools();
+  renderAll();
+})();
+</script>
+</body>
+</html>
